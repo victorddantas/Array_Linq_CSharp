@@ -120,7 +120,7 @@ void testaArrayDeContaCorrente()
 }
 
 //Array de Objetos a partir da classe
-testaArrayDeContaCorrente2();
+//testaArrayDeContaCorrente2();
 
 void testaArrayDeContaCorrente2()
 {
@@ -135,6 +135,34 @@ void testaArrayDeContaCorrente2()
 
     ContaCorrente conta = listaDeContasCorrentes.MaiorSaldo();
     Console.WriteLine($"A conta com maior saldo é: {conta.Saldo}");
+
+};
+
+
+//Removendo item do array e reorganizando
+
+testaArrayDeContaCorrente3();
+void testaArrayDeContaCorrente3()
+{
+    ListaDeContasCorrentes listaDeContasCorrentes = new ListaDeContasCorrentes();
+
+    listaDeContasCorrentes.Adicionar(new ContaCorrente(874, "111111111", 890000.00));
+    listaDeContasCorrentes.Adicionar(new ContaCorrente(339, "444444444", 4000.00));
+    listaDeContasCorrentes.Adicionar(new ContaCorrente(224, "444444444", 9000.00));
+    listaDeContasCorrentes.Adicionar(new ContaCorrente(372, "22222222", 2000.00));
+    listaDeContasCorrentes.Adicionar(new ContaCorrente(372, "22222222", 4000.00));
+
+    Console.WriteLine("==============================");
+
+    var contaDoVictor = new ContaCorrente(649,"111111111",10.0000);
+    listaDeContasCorrentes.Adicionar(contaDoVictor);
+
+    Console.WriteLine("==============================");
+    listaDeContasCorrentes.ExibeLista();
+    listaDeContasCorrentes.Remover(contaDoVictor);
+
+    Console.WriteLine("==============================");
+    listaDeContasCorrentes.ExibeLista();
 
 };
 

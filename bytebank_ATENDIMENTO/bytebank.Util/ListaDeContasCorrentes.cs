@@ -53,10 +53,10 @@ namespace bytebank_ATENDIMENTO.bytebank.Util
 
         //Verificando o maior saldo
 
-       public ContaCorrente MaiorSaldo()
+        public ContaCorrente MaiorSaldo()
         {
 
-            ContaCorrente saldo =null;
+            ContaCorrente saldo = null;
             double maiorValor = 0;
             for (int i = 0; i < _itens.Length; i++)
             {
@@ -72,10 +72,50 @@ namespace bytebank_ATENDIMENTO.bytebank.Util
             }
 
             return saldo;
+        }
 
 
+        //Exibindo um array 
 
-        //Removendo intens da lista
+        public void ExibeLista()
+        {
+            for (int i = 0; i < _itens.Length; i++)
+            {
+                if (_itens[i] != null)
+                {
+                    var conta = _itens[i];
+                    Console.WriteLine($"Indice [{i}] = Conta: {conta.Conta} - Nº da Agência: {conta.Numero_agencia}");
+                }
+            }
+        }
+
+        //Removendo itens da lista
+
+            public void Remover (ContaCorrente conta)
+            {
+                int indiceItem = -1;
+                for (int i = 0 ; i < _proximaPosicao; i++)
+                {
+                    ContaCorrente contaAtual = _itens[i];
+                    if (contaAtual == conta)
+                    {
+                        indiceItem = i;
+                        break;
+                    }
+                }
+
+                for   (int i = indiceItem; i < _proximaPosicao-1; i++)
+                {
+                    _itens[i] = _itens[i + 1];
+
+
+                }
+
+                _proximaPosicao--;
+                _itens[_proximaPosicao] = null;
+            }
+
+
         }
     }
-}
+
