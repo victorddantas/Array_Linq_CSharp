@@ -3,7 +3,7 @@ using bytebank_ATENDIMENTO.bytebank.Util;
 
 Console.WriteLine("Boas Vindas ao ByteBank, Atendimento.");
 
-
+#region Primeiro Array
 //testaArray();
 //TestaBuscarPalavra();
 
@@ -31,6 +31,9 @@ void testaArray()
     var media  = somadorDeIdade/idades.Length;
     Console.WriteLine($"A média das idades é: {media }");
 }
+#endregion
+
+#region Buscando itens em array
 void TestaBuscarPalavra()
 {
     string[] arrayDePalavras = new string[5];
@@ -55,9 +58,9 @@ void TestaBuscarPalavra()
     }
     
 }
+#endregion
 
-
-//Criando array utilizando a classe Array 
+#region Criando array utilizando a classe Array 
 
 Array amostra = Array.CreateInstance(typeof(double), 5);
 amostra.SetValue(5.9,0);
@@ -65,9 +68,9 @@ amostra.SetValue(1.8,1);
 amostra.SetValue(7.1,2);
 amostra.SetValue(10,3);
 amostra.SetValue(6.9,4);
+#endregion
 
-
-//TestaMediana(amostra);
+#region TestaMediana (Calculo de mediana no Array) ;
 
 void TestaMediana (Array array)
 {
@@ -94,8 +97,9 @@ void TestaMediana (Array array)
 
 
 }
+#endregion
 
-//Array de Objetos 
+#region Array de Objetos 
 
 //testaArrayDeContaCorrente();
 
@@ -118,8 +122,9 @@ void testaArrayDeContaCorrente()
 
     
 }
+#endregion
 
-//Array de Objetos a partir da classe
+#region Array de Objetos a partir da classe
 //testaArrayDeContaCorrente2();
 
 void testaArrayDeContaCorrente2()
@@ -137,11 +142,11 @@ void testaArrayDeContaCorrente2()
     Console.WriteLine($"A conta com maior saldo é: {conta.Saldo}");
 
 };
+#endregion
 
+#region Removendo item do array e reorganizando
 
-//Removendo item do array e reorganizando
-
-testaArrayDeContaCorrente3();
+//testaArrayDeContaCorrente3();
 void testaArrayDeContaCorrente3()
 {
     ListaDeContasCorrentes listaDeContasCorrentes = new ListaDeContasCorrentes();
@@ -165,11 +170,34 @@ void testaArrayDeContaCorrente3()
     listaDeContasCorrentes.ExibeLista();
 
 };
+#endregion
+
+#region Recuperando uma conta  pelo indice no array
+
+//testaArrayDeContaCorrente4();
+void testaArrayDeContaCorrente4()
+{
+    ListaDeContasCorrentes listaDeContasCorrentes = new ListaDeContasCorrentes();
+
+    listaDeContasCorrentes.Adicionar(new ContaCorrente(874, "111111111", 890000.00));
+    listaDeContasCorrentes.Adicionar(new ContaCorrente(339, "444444444", 4000.00));
+    listaDeContasCorrentes.Adicionar(new ContaCorrente(224, "444444444", 9000.00));
+    listaDeContasCorrentes.Adicionar(new ContaCorrente(372, "22222222", 2000.00));
+    listaDeContasCorrentes.Adicionar(new ContaCorrente(372, "22222222", 4000.00));
+
+    Console.WriteLine("==============================");
+
+    var contaDoVictor = new ContaCorrente(649, "111111111", 10.0000);
+    listaDeContasCorrentes.Adicionar(contaDoVictor);
 
 
+    for (int i = 0; i < listaDeContasCorrentes.Tamanho; i++)
+    {
+        ContaCorrente contaCorrente = listaDeContasCorrentes[i]; //Criando um indexador da classe de Conta Corrente quer então pode ter o comportamento de um array
+        Console.WriteLine($"Indice [{i}] = Conta: {contaCorrente.Conta} Agência: {contaCorrente.Numero_agencia}");
+    }
+    #endregion
 
+};
 
-
-
-//Retorna comta com maior saldo
 

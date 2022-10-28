@@ -14,6 +14,8 @@ namespace bytebank_ATENDIMENTO.bytebank.Util
         private ContaCorrente[] _itens = null;
         private int _proximaPosicao = 0;
 
+
+        //Construtor 
         public ListaDeContasCorrentes(int tamanhoInicial=5)
         {
             _itens = new ContaCorrente[tamanhoInicial];
@@ -116,6 +118,29 @@ namespace bytebank_ATENDIMENTO.bytebank.Util
             }
 
 
+        public ContaCorrente RecuperarContaNoIndice(int indice)
+        {
+            if (indice<0 || indice >= _proximaPosicao)
+            {
+                throw new ArgumentOutOfRangeException(nameof(indice));
+
+            }
+
+            return _itens[indice];
         }
+
+        public int Tamanho { get { return _proximaPosicao; } }
+
+
+
+        //Indexador de Classe
+        public ContaCorrente this [int indice]
+        {
+            get { return RecuperarContaNoIndice(indice); }
+        }
+
+
+
+    }
     }
 
