@@ -270,14 +270,14 @@ void CadastrarConta()
     Console.Write("Número da agência: ");
     int numeroAgencia = int.Parse(Console.ReadLine());
 
-
+   
 
     ContaCorrente contaCorrente = new ContaCorrente(numeroAgencia, numeroConta); ;
    
     Console.Write("Informe o saldo inicial: ");
     contaCorrente.Saldo = double.Parse(Console.ReadLine());
 
-    Console.Write("Informe o nome do titular da Conta: ");
+    Console.Write("Nome do Titular: ");
     contaCorrente.Titular.Nome = Console.ReadLine();
 
     Console.Write("Informe o CPF do titular da Conta: ");
@@ -313,6 +313,7 @@ void ListarContas()
     {
         Console.WriteLine("==================  Dados da Conta  ====================");
         Console.WriteLine($"Número da conta:{item.Conta} ");
+        Console.WriteLine($"Saldo da conta:{item.Saldo} ");
         Console.WriteLine($"Titular da conta:{item.Titular.Nome} ");
         Console.WriteLine($"CPF do titular:{item.Titular.Cpf} ");
         Console.WriteLine($"Profissão do titular:{item.Titular.Profissao} ");
