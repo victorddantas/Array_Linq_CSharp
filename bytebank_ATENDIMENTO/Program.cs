@@ -208,7 +208,8 @@ void testaArrayDeContaCorrente4()
 //Utilizando Coleções de arrays (Array list permite uma série de método com arrays, como cadastar, limpar entre outros)
 
 
-
+//poderia utilizar o Array list porém o tipo genérico é melhor pois da mais segurança pois vai aceitar elementos do tipo definido no "<>" (No caso abaixo tipo ContaCorrente) 
+//além de dar  a versatilidade do Genrics que pode ser definido o tipo no momento da utlizaçao, evitando erros.
 List<ContaCorrente> _listadeContas = new List<ContaCorrente>() {
     new ContaCorrente(95, "123456-x"){Saldo=100},
     new ContaCorrente(95, "123456-x"){Saldo=100},
