@@ -53,28 +53,28 @@ namespace bytebank_ATENDIMENTO.bytebank.Util
         }
 
 
-        //Verificando o maior saldo
+        ////Verificando o maior saldo
 
-        public ContaCorrente MaiorSaldo()
-        {
+        //public ContaCorrente MaiorSaldo()
+        //{
 
-            ContaCorrente saldo = null;
-            double maiorValor = 0;
-            for (int i = 0; i < _itens.Length; i++)
-            {
-                if (_itens[i] != null)
-                {
-                    if (!(maiorValor > _itens[i].Saldo))
-                    {
+        //    ContaCorrente saldo = null;
+        //    double maiorValor = 0;
+        //    for (int i = 0; i < _itens.Length; i++)
+        //    {
+        //        if (_itens[i] != null)
+        //        {
+        //            if (!(maiorValor > _itens[i].Saldo))
+        //            {
 
-                        saldo = _itens[i];
-                    }
-                }
+        //                saldo = _itens[i];
+        //            }
+        //        }
 
-            }
+        //    }
 
-            return saldo;
-        }
+        //    return saldo;
+        //}
 
 
         //Exibindo um array 
