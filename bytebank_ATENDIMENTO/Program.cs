@@ -1,6 +1,7 @@
 ﻿using bytebank.Modelos.Conta;
 using bytebank_ATENDIMENTO.bytebank.Util;
 using System.Collections;
+using System.Reflection;
 
 Console.WriteLine("Boas Vindas ao ByteBank, Atendimento.");
 
@@ -203,17 +204,18 @@ void testaArrayDeContaCorrente4()
 
 #endregion
 
-
-
-
-//Criando Menu de opções
+#region Criando Menu de opções
 //Utilizando Coleções de arrays (Array list permite uma série de método com arrays, como cadastar, limpar entre outros)
 
 
 
-ArrayList _listadeContas = new ArrayList();
+List<ContaCorrente> _listadeContas = new List<ContaCorrente>() {
+    new ContaCorrente(95, "123456-x"){Saldo=100},
+    new ContaCorrente(95, "123456-x"){Saldo=100},
+    new ContaCorrente(95, "123456-x"){Saldo=100},
+};
 
-atendimentoCliente();
+//atendimentoCliente();
 
 void atendimentoCliente()
 {
@@ -301,9 +303,9 @@ void ListarContas()
     Console.WriteLine("==============================================================");
     Console.WriteLine("\n");
 
-    if (_listadeContas.Count <= 0 )
+    if (_listadeContas.Count <= 0)
     {
- 
+
         Console.WriteLine("==============  Não há contas cadastradas  ================");
         Console.ReadKey();
         return;
@@ -321,6 +323,62 @@ void ListarContas()
         Console.ReadKey();
 
     }
-
-
 }
+#endregion
+
+#region Para relembrar. Generics e override
+
+// Posso definir o tipo da classe no momento de estanciar ela (classes foram criadas abaixo)
+
+MinhaCalsseGenerica<string> minhaCalsseGenerica = new MinhaCalsseGenerica<string>();//tipo string
+minhaCalsseGenerica.ExibirDados("Olá MUndo!!!");
+
+Console.WriteLine("===========================================================================");
+
+MinhaCalsseGenerica<int> minhaCalsseGenerica2 = new MinhaCalsseGenerica<int>();//tipo int
+minhaCalsseGenerica2.ExibirDados(100000);
+
+Console.WriteLine("===========================================================================");
+
+Pessoa pessoa = new Pessoa() { Idade = 24, Nome = "Victor" }; //estancia da classe pessoa
+
+MinhaCalsseGenerica<Pessoa> minhaCalsseGenerica3 = new MinhaCalsseGenerica<Pessoa>();//tipo pessoa (outra classe)
+minhaCalsseGenerica3.ExibirDados(pessoa);
+
+public class MinhaCalsseGenerica<T>
+{
+    
+    public T? PropiedadeGenerica { get; set; }// propiedade genérica 
+
+
+    public void ExibirDados(T t) 
+    {
+        Console.WriteLine($"Dado informado = {t.ToString()}");
+        Console.WriteLine($"Tipo = {t.GetType()}"); //vai exibir  o tipo 
+    }
+}
+
+
+//também pode definir  por classe 
+
+
+
+public class Pessoa {
+    public string? Nome { get; set; }
+    public int Idade { get; set; }
+
+
+    //O modificador override é necessário para estender ou modificar a implementação abstrata ou virtual de um método, propriedade, indexador ou evento herdado.
+    public override string ToString()
+    {
+        return $"Nome = {this.Nome} com Idade = {this.Idade}";
+    }
+}
+
+   
+
+
+
+
+
+#endregion
