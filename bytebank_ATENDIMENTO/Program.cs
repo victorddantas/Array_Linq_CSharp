@@ -331,53 +331,110 @@ void ListarContas()
 
 // Posso definir o tipo da classe no momento de estanciar ela (classes foram criadas abaixo)
 
-MinhaCalsseGenerica<string> minhaCalsseGenerica = new MinhaCalsseGenerica<string>();//tipo string
-minhaCalsseGenerica.ExibirDados("Olá MUndo!!!");
+//MinhaCalsseGenerica<string> minhaCalsseGenerica = new MinhaCalsseGenerica<string>();//tipo string
+//minhaCalsseGenerica.ExibirDados("Olá MUndo!!!");
 
-Console.WriteLine("===========================================================================");
+//Console.WriteLine("===========================================================================");
 
-MinhaCalsseGenerica<int> minhaCalsseGenerica2 = new MinhaCalsseGenerica<int>();//tipo int
-minhaCalsseGenerica2.ExibirDados(100000);
+//MinhaCalsseGenerica<int> minhaCalsseGenerica2 = new MinhaCalsseGenerica<int>();//tipo int
+//minhaCalsseGenerica2.ExibirDados(100000);
 
-Console.WriteLine("===========================================================================");
+//Console.WriteLine("===========================================================================");
 
-Pessoa pessoa = new Pessoa() { Idade = 24, Nome = "Victor" }; //estancia da classe pessoa
+//Pessoa pessoa = new Pessoa() { Idade = 24, Nome = "Victor" }; //estancia da classe pessoa
 
-MinhaCalsseGenerica<Pessoa> minhaCalsseGenerica3 = new MinhaCalsseGenerica<Pessoa>();//tipo pessoa (outra classe)
-minhaCalsseGenerica3.ExibirDados(pessoa);
+//MinhaCalsseGenerica<Pessoa> minhaCalsseGenerica3 = new MinhaCalsseGenerica<Pessoa>();//tipo pessoa (outra classe)
+//minhaCalsseGenerica3.ExibirDados(pessoa);
 
-public class MinhaCalsseGenerica<T>
-{
+//public class MinhaCalsseGenerica<T>
+//{
     
-    public T? PropiedadeGenerica { get; set; }// propiedade genérica 
+//    public T? PropiedadeGenerica { get; set; }// propiedade genérica 
 
 
-    public void ExibirDados(T t) 
-    {
-        Console.WriteLine($"Dado informado = {t.ToString()}");
-        Console.WriteLine($"Tipo = {t.GetType()}"); //vai exibir  o tipo 
-    }
-}
+//    public void ExibirDados(T t) 
+//    {
+//        Console.WriteLine($"Dado informado = {t.ToString()}");
+//        Console.WriteLine($"Tipo = {t.GetType()}"); //vai exibir  o tipo 
+//    }
+//}
 
 
 //também pode definir  por classe 
 
 
 
-public class Pessoa {
-    public string? Nome { get; set; }
-    public int Idade { get; set; }
+//public class Pessoa {
+//    public string? Nome { get; set; }
+//    public int Idade { get; set; }
 
 
-    //O modificador override é necessário para estender ou modificar a implementação abstrata ou virtual de um método, propriedade, indexador ou evento herdado.
-    public override string ToString()
-    {
-        return $"Nome = {this.Nome} com Idade = {this.Idade}";
-    }
+//    //O modificador override é necessário para estender ou modificar a implementação abstrata ou virtual de um método, propriedade, indexador ou evento herdado.
+//    public override string ToString()
+//    {
+//        return $"Nome = {this.Nome} com Idade = {this.Idade}";
+//    }
+//}
+
+
+
+
+
+
+
+#endregion
+
+#region Métodos da Coleção List (genérica) 
+
+List<ContaCorrente> _listaDeContas1 = new List<ContaCorrente>()
+{
+    new ContaCorrente(999,"598087-A"),
+    new ContaCorrente(888,"089543-B"),
+    new ContaCorrente(777,"489765-C")
+};
+
+List<ContaCorrente> _listaDeContas2 = new List<ContaCorrente>()
+{
+    new ContaCorrente(999,"598087-D"),
+    new ContaCorrente(888,"089543-E"),
+    new ContaCorrente(777,"489765-F")
+};
+
+
+
+//O Addrange adiciona junta duas listas 
+_listaDeContas1.AddRange(_listaDeContas2);
+
+for (int i = 0; i < _listaDeContas1.Count; i++)
+{
+    Console.WriteLine($"Indice[{i}] = Conta [{_listaDeContas1[i].Conta}]");
 }
 
-   
 
+//remover indices de uma lista com o getRange
+
+Console.WriteLine("\n");
+Console.WriteLine("============================================");
+var range = _listaDeContas2.GetRange(0, 1);
+
+for (int i = 0; i < range.Count; i++)
+{
+    Console.WriteLine($"Indice[{i}] = Conta [{range[i].Conta}]");
+}
+
+//inverter uma lista com reverse
+Console.WriteLine("\n");
+Console.WriteLine("============================================");
+
+
+_listaDeContas2.Reverse();
+
+var lista1 = _listaDeContas2;
+
+for (int i = 0; i < lista1.Count; i++)
+{
+    Console.WriteLine($"Indice[{i}] = Conta [{lista1[i].Conta}]");
+}
 
 
 
