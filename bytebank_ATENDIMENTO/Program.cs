@@ -440,3 +440,50 @@ for (int i = 0; i < lista1.Count; i++)
 
 
 #endregion
+
+#region Desafio - Encontre o nome no array
+
+buscarNome();
+
+void buscarNome() {
+    List<string> nomesDosEscolhidos = new List<string>()
+{
+    "Carlos Vilagran",
+    "Richard Grayson",
+    "Bob Kane",
+    "Will Farrel",
+    "Lois Lane",
+    "General Welling",
+    "Perla Letícia",
+    "Uxas",
+    "Diana Prince",
+    "Elisabeth Romanova",
+    "Anakin Wayne"
+};
+
+    if (nomesDosEscolhidos.Count > 0)
+
+    {
+        Console.WriteLine("\n\n");
+        Console.Write("Digite a palavra a ser encontrada: ");
+        var busca = Console.ReadLine();
+
+        foreach (var item in nomesDosEscolhidos)
+        {
+            if (item.Equals(busca))
+            {
+                Console.WriteLine($"Palavra encontrada = {busca}");
+                break;
+            }
+        }
+    }
+
+    else
+    {
+        Console.WriteLine("Não há palavras na lista");
+    }
+}
+
+
+
+#endregion
