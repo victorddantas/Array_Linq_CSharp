@@ -1,6 +1,7 @@
 ﻿using bytebank.Modelos.Conta;
 using bytebank_ATENDIMENTO.bytebank.Util;
 using System.Collections;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 Console.WriteLine("Boas Vindas ao ByteBank, Atendimento.");
@@ -204,129 +205,6 @@ void testaArrayDeContaCorrente4()
 
 #endregion
 
-#region Criando Menu de opções
-//Utilizando Coleções de arrays (Array list permite uma série de método com arrays, como cadastar, limpar entre outros)
-
-
-//poderia utilizar o Array list porém o tipo genérico é melhor pois da mais segurança pois vai aceitar elementos do tipo definido no "<>" (No caso abaixo tipo ContaCorrente) 
-//além de dar  a versatilidade do Genrics que pode ser definido o tipo no momento da utlizaçao, evitando erros.
-List<ContaCorrente> _listadeContas = new List<ContaCorrente>() {
-    new ContaCorrente(95, "123456-x"){Saldo=100},
-    new ContaCorrente(95, "123456-x"){Saldo=100},
-    new ContaCorrente(95, "123456-x"){Saldo=100},
-};
-
-//atendimentoCliente();
-
-void atendimentoCliente()
-{
-    char opcao = '0';
-    while (opcao != '6')
-    {
-        Console.Clear();
-        Console.WriteLine("==============================================================");
-        Console.WriteLine("==================       ATENDIMENTO       ===================");
-        Console.WriteLine("==================  1 - Cadastrar Conta    ===================");
-        Console.WriteLine("==================  2 - Listar Conta       ===================");
-        Console.WriteLine("==================  3 - Remover Conta      ===================");
-        Console.WriteLine("==================  4 - Ordenar Conta      ===================");
-        Console.WriteLine("==================  5 - Pesquisar Conta    ===================");
-        Console.WriteLine("==================  6 - Sair do sistema    ===================");
-        Console.WriteLine("==============================================================");
-        Console.WriteLine("\n\n");
-        Console.Write("Digite a opção desejada: ");
-        opcao = Console.ReadLine()[0];
-        switch (opcao)
-        {
-            case '1':
-                CadastrarConta();
-                break;
-            case '2':
-                ListarContas();
-                break;
-            default:
-                Console.WriteLine("Opção não implementada");
-                break;
-        }
-
-
-
-    }
-
-}
-
-
-
-void CadastrarConta()
-{
-    Console.Clear();
-    Console.WriteLine("==============================================================");
-    Console.WriteLine("==================  1 - Cadastrar Conta    ===================");
-    Console.WriteLine("==============================================================");
-    Console.WriteLine("\n");
-    Console.WriteLine("================  Informe os dados da Conta  =================");
-    Console.WriteLine("\n");
-  
-    Console.Write("Número da Conta: ");
-    string numeroConta = Console.ReadLine();
-   
-    Console.Write("Número da agência: ");
-    int numeroAgencia = int.Parse(Console.ReadLine());
-
-   
-
-    ContaCorrente contaCorrente = new ContaCorrente(numeroAgencia, numeroConta); ;
-   
-    Console.Write("Informe o saldo inicial: ");
-    contaCorrente.Saldo = double.Parse(Console.ReadLine());
-
-    Console.Write("Nome do Titular: ");
-    contaCorrente.Titular.Nome = Console.ReadLine();
-
-    Console.Write("Informe o CPF do titular da Conta: ");
-    contaCorrente.Titular.Cpf = Console.ReadLine();
-
-    Console.Write("Informe a profissão do titular da Conta: ");
-    contaCorrente.Titular.Profissao = Console.ReadLine();
-
-    _listadeContas.Add(contaCorrente);
-    Console.WriteLine("\n");
-    Console.WriteLine("==============  Conta Cadastrada com Sucesso  ================");
-    Console.ReadKey();
-
-}
-
-void ListarContas()
-{
-    Console.Clear();
-    Console.WriteLine("==============================================================");
-    Console.WriteLine("==================   2 - Listar Contas     ===================");
-    Console.WriteLine("==============================================================");
-    Console.WriteLine("\n");
-
-    if (_listadeContas.Count <= 0)
-    {
-
-        Console.WriteLine("==============  Não há contas cadastradas  ================");
-        Console.ReadKey();
-        return;
-
-    }
-    foreach (ContaCorrente item in _listadeContas)
-    {
-        Console.WriteLine("==================  Dados da Conta  ====================");
-        Console.WriteLine($"Número da conta:{item.Conta} ");
-        Console.WriteLine($"Saldo da conta:{item.Saldo} ");
-        Console.WriteLine($"Titular da conta:{item.Titular.Nome} ");
-        Console.WriteLine($"CPF do titular:{item.Titular.Cpf} ");
-        Console.WriteLine($"Profissão do titular:{item.Titular.Profissao} ");
-        Console.WriteLine("========================================================");
-        Console.ReadKey();
-
-    }
-}
-#endregion
-
 #region Para relembrar. Generics e override
 
 // Posso definir o tipo da classe no momento de estanciar ela (classes foram criadas abaixo)
@@ -348,7 +226,7 @@ void ListarContas()
 
 //public class MinhaCalsseGenerica<T>
 //{
-    
+
 //    public T? PropiedadeGenerica { get; set; }// propiedade genérica 
 
 
@@ -443,9 +321,10 @@ for (int i = 0; i < lista1.Count; i++)
 
 #region Desafio - Encontre o nome no array
 
-buscarNome();
+//buscarNome();
 
-void buscarNome() {
+void buscarNome()
+{
     List<string> nomesDosEscolhidos = new List<string>()
 {
     "Carlos Vilagran",
@@ -487,3 +366,246 @@ void buscarNome() {
 
 
 #endregion
+
+#region Criando Sistema Bancário
+//Utilizando Coleções de arrays (Array list permite uma série de método com arrays, como cadastar, limpar entre outros)
+
+
+//poderia utilizar o Array list porém o tipo genérico é melhor pois da mais segurança pois vai aceitar elementos do tipo definido no "<>" (No caso abaixo tipo ContaCorrente) 
+//além de dar  a versatilidade do Genrics que pode ser definido o tipo no momento da utlizaçao, evitando erros.
+List<ContaCorrente> _listadeContas = new List<ContaCorrente>() {
+    new ContaCorrente(95, "123456-x"){Saldo=100, Titular = new Cliente("33333333333", "Victor", "Programador")}, 
+    new ContaCorrente(96, "789101-y"){Saldo=200, Titular = new Cliente("44444444444", "Vivian", "Médica")}, 
+    new ContaCorrente(97, "121314-z"){Saldo=300, Titular = new Cliente("55555555555", "Vinicius","Engenheiro")},
+};
+
+atendimentoCliente();
+
+void atendimentoCliente()
+{
+    char opcao = '0';
+    while (opcao != '6')
+    {
+        Console.Clear();
+        Console.WriteLine("==============================================================");
+        Console.WriteLine("==================       ATENDIMENTO       ===================");
+        Console.WriteLine("==================  1 - Cadastrar Conta    ===================");
+        Console.WriteLine("==================  2 - Listar Conta       ===================");
+        Console.WriteLine("==================  3 - Remover Conta      ===================");
+        Console.WriteLine("==================  4 - Ordenar Conta      ===================");
+        Console.WriteLine("==================  5 - Pesquisar Conta    ===================");
+        Console.WriteLine("==================  6 - Sair do sistema    ===================");
+        Console.WriteLine("==============================================================");
+        Console.WriteLine("\n\n");
+        Console.Write("Digite a opção desejada: ");
+        opcao = Console.ReadLine()[0];
+        switch (opcao)
+        {
+            case '1':
+                CadastrarConta();
+                break;
+            case '2':
+                ListarContas();
+                break;
+            case '3':
+                RemoverContas();
+                break;
+            case '4':
+                OrdenarContas();
+                break;
+            case '5':
+                PesquisarContas();
+                break;
+            default:
+                Console.WriteLine("Opção não implementada");
+                break;
+        }
+
+    }
+
+}
+
+
+void CadastrarConta()
+{
+    Console.Clear();
+    Console.WriteLine("==============================================================");
+    Console.WriteLine("==================  1 - Cadastrar Conta    ===================");
+    Console.WriteLine("==============================================================");
+    Console.WriteLine("\n");
+    Console.WriteLine("================  Informe os dados da Conta  =================");
+    Console.WriteLine("\n");
+  
+    Console.Write("Número da Conta: ");
+    string numeroConta = Console.ReadLine();
+   
+    Console.Write("Número da agência: ");
+    int numeroAgencia = int.Parse(Console.ReadLine());
+
+   
+
+    ContaCorrente contaCorrente = new ContaCorrente(numeroAgencia, numeroConta); ;
+   
+    Console.Write("Informe o saldo inicial: ");
+    contaCorrente.Saldo = double.Parse(Console.ReadLine());
+
+    Console.Write("Nome do Titular: ");
+    contaCorrente.Titular.Nome = Console.ReadLine();
+
+    Console.Write("Informe o CPF do titular da Conta: ");
+    contaCorrente.Titular.Cpf = Console.ReadLine();
+
+    Console.Write("Informe a profissão do titular da Conta: ");
+    contaCorrente.Titular.Profissao = Console.ReadLine();
+
+    _listadeContas.Add(contaCorrente);
+    Console.WriteLine("\n");
+    Console.WriteLine("==============  Conta Cadastrada com Sucesso  ================");
+    Console.ReadKey();
+
+}
+
+void ListarContas()
+{
+    Console.Clear();
+    Console.WriteLine("==============================================================");
+    Console.WriteLine("==================   2 - Listar Contas     ===================");
+    Console.WriteLine("==============================================================");
+    Console.WriteLine("\n");
+
+    if (_listadeContas.Count <= 0)
+    {
+
+        Console.WriteLine("==============  Não há contas cadastradas  ================");
+        Console.ReadKey();
+        return;
+
+    }
+    foreach (ContaCorrente item in _listadeContas)
+    {
+        Console.WriteLine("==================  Dados da Conta  ====================");
+        Console.WriteLine($"Número da conta:{item.Conta} ");
+        Console.WriteLine($"Saldo da conta:{item.Saldo} ");
+        Console.WriteLine($"Titular da conta:{item.Titular.Nome} ");
+        Console.WriteLine($"CPF do titular:{item.Titular.Cpf} ");
+        Console.WriteLine($"Profissão do titular:{item.Titular.Profissao} ");
+        Console.WriteLine("========================================================");
+        Console.ReadKey();
+
+    }
+
+}
+
+void RemoverContas()
+{
+    Console.Clear();
+    Console.WriteLine("==============================================================");
+    Console.WriteLine("==================   3 - Remover Contas     ==================");
+    Console.WriteLine("==============================================================");
+    Console.WriteLine("\n");
+
+    Console.Write("Informe o número da conta: ");
+    string numeroConta = Console.ReadLine();
+    ContaCorrente? conta = null;
+
+    foreach(var item in _listadeContas)
+    {
+        if(item.Conta.Equals(numeroConta))
+        {
+            conta= item;
+        }
+    }
+
+    if (conta != null)
+    {
+        _listadeContas.Remove(conta);
+        Console.Write("...Conta removida com sucesso!!!");
+    }
+    else
+    {
+        Console.Write("...Conta não encontrada...");
+    }
+    Console.ReadKey();
+}
+
+void OrdenarContas()
+{
+    _listadeContas.Sort();
+    Console.WriteLine("...Lista de contas ordenada...");
+    Console.ReadKey();
+}
+
+void PesquisarContas()
+{
+    Console.Clear();
+    Console.WriteLine("==============================================================");
+    Console.WriteLine("=================   5 - Pesquisar Contas    ==================");
+    Console.WriteLine("==============================================================");
+    Console.WriteLine("\n");
+
+    Console.Write("Deseja pesquisar por (1) NÚMERO DA CONTA ou (2)CPF TITULAR ? ");
+
+    switch (int.Parse(Console.ReadLine()))
+    {
+        case 1:
+            {
+                Console.Write("Informe o número da conta: ");
+                string _numeroConta = Console.ReadLine();
+                ContaCorrente consultaConta = ConsultaPorNumeroConta(_numeroConta);
+                Console.WriteLine(consultaConta.ToString()); //O método Tostring foi reescrito
+                Console.ReadKey();
+                break;
+            }
+        case 2:
+            {
+                Console.Write("Informe o CPF do titular: ");
+                string _Cpf = Console.ReadLine();
+                ContaCorrente consultaCpf = ConsultaPorCPFTitular(_Cpf);
+                Console.WriteLine(consultaCpf.ToString()); //O método Tostring foi reescrito
+                Console.ReadKey();
+                break;
+            }
+    }
+}
+
+
+
+ContaCorrente ConsultaPorNumeroConta(string? numeroConta)
+{
+    ContaCorrente? conta = null;
+
+    for (int i = 0; i < _listadeContas.Count; i++)
+    {
+        if (_listadeContas[i].Conta.Equals(numeroConta))
+        {
+            conta = _listadeContas[i];
+        }
+    }
+
+    return conta;
+
+    Console.ReadKey();
+}
+
+ContaCorrente ConsultaPorCPFTitular(string? cpf)
+{
+    ContaCorrente? conta = null;
+
+    for (int i = 0; i < _listadeContas.Count; i++)
+    {
+        if (_listadeContas[i].Titular.Cpf.Equals(cpf))
+        {
+            conta = _listadeContas[i];
+        }
+    }
+
+    return conta;
+
+    Console.ReadKey();
+
+}
+#endregion
+
+
+
+

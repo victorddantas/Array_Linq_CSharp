@@ -30,5 +30,12 @@
         {
             TotalClientesCadastrados = TotalClientesCadastrados + 1;
         }
+
+        public Cliente(string cpf, string nome, string profissao)
+        {
+            _nome = nome;
+            Cpf = cpf;
+            Profissao = profissao;
+        }
     }
 }

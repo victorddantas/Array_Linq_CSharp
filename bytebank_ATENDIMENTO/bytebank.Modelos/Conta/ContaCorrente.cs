@@ -1,6 +1,6 @@
 ﻿namespace bytebank.Modelos.Conta
 {
-    public class ContaCorrente
+    public class ContaCorrente : IComparable<ContaCorrente> //NECESSÁRIO PARA UTILIZAÇÃO DO MÉTODO SORT (ORDENADÇÃO DAS CONTAS)
     {
 
         public Cliente Titular { get; set; }
@@ -111,6 +111,20 @@
             }
         }
 
+
+        //MÉTODO DA INTERFACE UTILIZADA IComparable<ContaCorrente>
+        public int CompareTo(ContaCorrente? other)
+        {
+            if (other == null)
+            {
+               return 1;
+            }
+            else
+            {
+                return this.Numero_agencia.CompareTo(other.Numero_agencia); // ordenando pelo número da agência
+            }
+        }
+
         public ContaCorrente(int numero_agencia, string conta)
         {
             Numero_agencia = numero_agencia;
@@ -136,5 +150,16 @@
         //}
 
 
+
+        //sobreescrevendo o método to string para exibir as informções da conta no método de pesquisa
+        public override string ToString()
+        {
+            return $"\n========= DADOS DA CONTA =========\n" +
+                   $"Número da Conta: {this.Conta}\n" +
+                   $"Saldo da conta: {this.Saldo}\n" +
+                   $"Titular da conta: {this.Titular.Nome}\n" +
+                   $"CPF do Titular: {this.Titular.Cpf}\n" +
+                   $"Profissão do Titular: {this.Titular.Profissao}\n";
+        }
     }
 }
