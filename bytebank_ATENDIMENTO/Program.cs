@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 Console.WriteLine("Boas Vindas ao ByteBank, Atendimento.");
+#nullable disable //desabilita os aviso de nullable (pode ser feito também no arquivo csproj (clique duas vezes na biblioteca)
+
 
 #region Primeiro Array
 //testaArray();
@@ -375,7 +377,7 @@ void buscarNome()
 //além de dar  a versatilidade do Genrics que pode ser definido o tipo no momento da utlizaçao, evitando erros.
 List<ContaCorrente> _listadeContas = new List<ContaCorrente>() {
     new ContaCorrente(95, "123456-x"){Saldo=100, Titular = new Cliente("33333333333", "Victor", "Programador")}, 
-    new ContaCorrente(96, "789101-y"){Saldo=200, Titular = new Cliente("44444444444", "Vivian", "Médica")}, 
+    new ContaCorrente(95, "789101-y"){Saldo=200, Titular = new Cliente("44444444444", "Vivian", "Médica")}, 
     new ContaCorrente(97, "121314-z"){Saldo=300, Titular = new Cliente("55555555555", "Vinicius","Engenheiro")},
 };
 
@@ -416,14 +418,18 @@ void atendimentoCliente()
             case '5':
                 PesquisarContas();
                 break;
+            case '6':
+                EncerrarAplicacao();
+                break;
             default:
-                Console.WriteLine("Opção não implementada");
+                Console.WriteLine("Opção não encontrada.");
                 break;
         }
 
     }
 
 }
+
 
 
 void CadastrarConta()
@@ -436,15 +442,13 @@ void CadastrarConta()
     Console.WriteLine("================  Informe os dados da Conta  =================");
     Console.WriteLine("\n");
   
-    Console.Write("Número da Conta: ");
-    string numeroConta = Console.ReadLine();
    
     Console.Write("Número da agência: ");
     int numeroAgencia = int.Parse(Console.ReadLine());
 
-   
 
-    ContaCorrente contaCorrente = new ContaCorrente(numeroAgencia, numeroConta); ;
+    ContaCorrente contaCorrente = new ContaCorrente(numeroAgencia);
+    Console.WriteLine($"O número da conta gerado é: {contaCorrente.Conta}" );
    
     Console.Write("Informe o saldo inicial: ");
     contaCorrente.Saldo = double.Parse(Console.ReadLine());
@@ -483,12 +487,7 @@ void ListarContas()
     }
     foreach (ContaCorrente item in _listadeContas)
     {
-        Console.WriteLine("==================  Dados da Conta  ====================");
-        Console.WriteLine($"Número da conta:{item.Conta} ");
-        Console.WriteLine($"Saldo da conta:{item.Saldo} ");
-        Console.WriteLine($"Titular da conta:{item.Titular.Nome} ");
-        Console.WriteLine($"CPF do titular:{item.Titular.Cpf} ");
-        Console.WriteLine($"Profissão do titular:{item.Titular.Profissao} ");
+        Console.WriteLine(item.ToString());
         Console.WriteLine("========================================================");
         Console.ReadKey();
 
@@ -543,7 +542,7 @@ void PesquisarContas()
     Console.WriteLine("==============================================================");
     Console.WriteLine("\n");
 
-    Console.Write("Deseja pesquisar por (1) NÚMERO DA CONTA ou (2)CPF TITULAR ? ");
+    Console.Write("Deseja pesquisar por (1) NÚMERO DA CONTA, (2) CPF TITULAR ou (3) NÚMERO DA AGÊNCIA? ");
 
     switch (int.Parse(Console.ReadLine()))
     {
@@ -551,7 +550,7 @@ void PesquisarContas()
             {
                 Console.Write("Informe o número da conta: ");
                 string _numeroConta = Console.ReadLine();
-                ContaCorrente consultaConta = ConsultaPorNumeroConta(_numeroConta);
+                ContaCorrente consultaConta = ConsultarPorNumeroConta(_numeroConta);
                 Console.WriteLine(consultaConta.ToString()); //O método Tostring foi reescrito
                 Console.ReadKey();
                 break;
@@ -560,49 +559,107 @@ void PesquisarContas()
             {
                 Console.Write("Informe o CPF do titular: ");
                 string _Cpf = Console.ReadLine();
-                ContaCorrente consultaCpf = ConsultaPorCPFTitular(_Cpf);
+                ContaCorrente consultaCpf = ConsultarPorCPFTitular(_Cpf);
                 Console.WriteLine(consultaCpf.ToString()); //O método Tostring foi reescrito
                 Console.ReadKey();
                 break;
             }
+        case 3:
+            {
+                Console.Write("Informe o número da agência: ");
+                int _numeroAgencia = int.Parse(Console.ReadLine());
+                var contasPorAgencia = ConsultarPorAgencia(_numeroAgencia);
+                ExibirListaDeContas(contasPorAgencia);
+                Console.ReadKey();
+                break;
+            }
+        default:
+            Console.WriteLine("Opção não encontrada.");
+            break;
     }
 }
 
-
-
-ContaCorrente ConsultaPorNumeroConta(string? numeroConta)
+void EncerrarAplicacao()
 {
-    ContaCorrente? conta = null;
-
-    for (int i = 0; i < _listadeContas.Count; i++)
-    {
-        if (_listadeContas[i].Conta.Equals(numeroConta))
-        {
-            conta = _listadeContas[i];
-        }
-    }
-
-    return conta;
-
+    Console.WriteLine("...Encerrando aplicação...");
     Console.ReadKey();
 }
 
-ContaCorrente ConsultaPorCPFTitular(string? cpf)
+ContaCorrente ConsultarPorNumeroConta(string? numeroConta)
 {
-    ContaCorrente? conta = null;
+    //ContaCorrente? conta = null;
 
-    for (int i = 0; i < _listadeContas.Count; i++)
+    //for (int i = 0; i < _listadeContas.Count; i++)
+    //{
+    //    if (_listadeContas[i].Conta.Equals(numeroConta))
+    //    {
+    //        conta = _listadeContas[i];
+    //    }
+    //}
+
+    //return conta;
+
+    //Console.ReadKey();
+
+    // Where é um método de extensão do LINQ (Consulta integrada á linguagem) - Este por sua vez é um "framework" que permite  uma consulta em uma fonte de dados (recuperar um objeto de uma coleção de dados) sejam eles listas, banco de dados, xml, etc.
+    //ou podemos usar o LINQ
+
+    return (from conta in _listadeContas 
+            where conta.Conta == numeroConta
+            select conta).FirstOrDefault();
+           
+
+    //ou podemos usar o LINQ com Lambda
+
+    //return _listadeContas.Where(conta => conta.Conta == numeroConta).FirstOrDefault();
+}
+
+ContaCorrente ConsultarPorCPFTitular(string? cpf)
+{
+    //ContaCorrente? conta = null;
+
+    //for (int i = 0; i < _listadeContas.Count; i++)
+    //{
+    //    if (_listadeContas[i].Titular.Cpf.Equals(cpf))
+    //    {
+    //        conta = _listadeContas[i];
+    //    }
+    //}
+
+    //return conta;
+
+    //Console.ReadKey();
+
+
+   return _listadeContas.Where(conta=>conta.Titular.Cpf == cpf).FirstOrDefault();
+
+}
+
+List<ContaCorrente> ConsultarPorAgencia(int numeroAgencia) //tipo object pois definimos como do tipo var 
+
+    //Utilizando o método where e select para realizar uma consulta na Lista -- Utilizando o LINQ
+{
+    var consulta = (
+            from conta in _listadeContas
+            where conta.Numero_agencia == numeroAgencia
+            select conta).ToList();
+    return consulta;
+}
+
+//Método para exibir as consultas realizadas pelo Método de consulta por agência, pois estamos retornando uma lista de objetos na consulta por agência
+void ExibirListaDeContas(List<ContaCorrente> contasPorAgencia)
+{
+   if(contasPorAgencia == null)
     {
-        if (_listadeContas[i].Titular.Cpf.Equals(cpf))
-        {
-            conta = _listadeContas[i];
-        }
+        Console.WriteLine("...A consulta não retornou dados...");
     }
-
-    return conta;
-
-    Console.ReadKey();
-
+    else
+    {
+        foreach(var item in contasPorAgencia)
+        {
+            Console.WriteLine(item.ToString());
+        }  
+    }
 }
 #endregion
 
